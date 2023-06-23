@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ScrollView, TextInput, Image, TouchableOpacity } from 'react-native';
+import ChevronUp from './svgs/ChevronUp';
+import ChevronDown from './svgs/ChevronDown';
 
 export default function App() {
 
@@ -10,6 +12,8 @@ export default function App() {
     weight: "",
     location: ""
   });
+
+  const [displayForm, setDisplayForm] = useState(false);
 
   const fish = [
 
@@ -110,18 +114,31 @@ export default function App() {
         })}
       </ScrollView>
 
-      <View style={styles.form}>
-        <View style={styles.shrinkBar}/>
-        <View style={{padding: 15}}>
-          <TextInput style={styles.input} value={newFish.type} placeholder={"Type"} />
-          <TextInput style={styles.input} value={newFish.weight} placeholder={"Weight"}/>
-          <TextInput style={styles.input} value={newFish.size} placeholder={"Size"} />
-          <TextInput style={styles.input} value={newFish.location} placeholder={"Location"} />
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Caught Fish</Text>
+      {
+        displayForm ?
+          <View style={styles.form}>
+            <TouchableOpacity onPress={() => {setDisplayForm(false)}} style={styles.shrinkBar}>
+              <ChevronDown color={"#fff"} />
+            </TouchableOpacity>
+            <View style={{padding: 15}}>
+              <TextInput style={styles.input} value={newFish.type} placeholder={"Type"} />
+              <TextInput style={styles.input} value={newFish.weight} placeholder={"Weight"}/>
+              <TextInput style={styles.input} value={newFish.size} placeholder={"Size"} />
+              <TextInput style={styles.input} value={newFish.location} placeholder={"Location"} />
+              <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText}>Caught Fish</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          :
+          <TouchableOpacity onPress={() => {setDisplayForm(true)}} style={styles.expandBar}>
+            <ChevronUp style={{position: "absolute", left: 15, top: 30, zIndex: 99}} color={"#fff"}/>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Caught Fish</Text>
+            </View>
           </TouchableOpacity>
-        </View>
-      </View>
+
+      }
 
     </View>
   );
@@ -155,6 +172,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#E66952",
     padding: 15,
     width: "100%",
+    alignItems: "flex-end"
+  },
+  expandBar: {
+    backgroundColor: "#E66952",
+    padding: 15,
+    width: "100%",
+    position: "relative",
   },
   form: {
     width: "100%",
