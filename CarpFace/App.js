@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ScrollView, TextInput, Image, TouchableOpacity } from 'react-native';
 import ChevronUp from './svgs/ChevronUp';
 import ChevronDown from './svgs/ChevronDown';
+import Home from './svgs/Home';
 
 export default function App() {
 
@@ -98,6 +99,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.tabBar}>
+        <Home />
+      </View>
       <ScrollView style={{width: "100%"}}>
         {fish.map(({id, type, size, weight, location}) => {
 
@@ -202,5 +206,10 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "semibold"
+  },
+  tabBar: {
+    padding: 15,
+    backgroundColor: "#E66952",
+    width: "100%"
   }
 });
